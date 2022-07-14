@@ -1,15 +1,17 @@
-import { UserRepository } from "../../../repositories/user";
+import { UserRepository } from "@domain/repositories/user"
 
 export class ExistUserByUserName {
-  private readonly _userRepository: UserRepository;
+  private readonly _userResposiory: UserRepository
 
-  constructor(userRepository: UserRepository) {
-    this._userRepository = userRepository;
+  constructor (userRepository: UserRepository) {
+    this._userResposiory = userRepository
   }
 
   async run (username: string): Promise<boolean> {
-    const user = await this._userRepository.getByUserName(username);
-    if(user !== null) return true
+    const user = await this._userResposiory.getByUserName(username)
+
+    if (user !== null) return true
+
     return false
   }
 }

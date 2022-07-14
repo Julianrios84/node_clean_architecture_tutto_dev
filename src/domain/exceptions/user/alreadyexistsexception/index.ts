@@ -1,5 +1,8 @@
-export class UserAlreadyExistsException extends Error {
-  constructor() {
-    super('User already exists');
-  }  
+import { Exception } from "@domain/exceptions/exception"
+
+export class UserAlreadyExistsException extends Exception {
+  constructor () {
+    super('User already exists')
+    this.spanishMessage = 'El usuario ya existe'
+  }
 }

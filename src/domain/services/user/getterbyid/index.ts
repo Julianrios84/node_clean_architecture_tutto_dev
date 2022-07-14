@@ -1,6 +1,6 @@
-import { User } from 'domain/entities/user'
-import { UserRepository } from '../../../../domain/repositories/user'
-import { UserNotFoundException } from '../../../exceptions/user'
+import { User } from "@domain/entities/user"
+import { UserNotFoundException } from "@domain/exceptions/user"
+import { UserRepository } from "@domain/repositories/user"
 
 export class UserGetterById {
   private readonly _userResposiory: UserRepository

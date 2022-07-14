@@ -1,6 +1,6 @@
-import { User } from '../../../../domain/entities/user'
-import { UserRepository } from '../../../../domain/repositories/user'
-import { UserGetterById } from '../../../../domain/services/user/getterbyid'
+import { User } from "@domain/entities/user"
+import { UserRepository } from "@domain/repositories/user"
+import { UserGetterById } from "@domain/services/user/getterbyid"
 
 export class UserUpdaterUseCase {
   private readonly _userResposiory: UserRepository

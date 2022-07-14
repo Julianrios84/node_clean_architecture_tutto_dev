@@ -1,6 +1,6 @@
-import { User } from 'domain/entities/user'
-import { UserRepository } from '../../../../domain/repositories/user'
-import { UserGetterById } from '../../../../domain/services/user/getterbyid'
+import { User } from "@domain/entities/user"
+import { UserRepository } from "@domain/repositories/user"
+import { UserGetterById } from "@domain/services/user/getterbyid"
 
 export class UserDeleterUseCase {
   private readonly _userResposiory: UserRepository
@@ -13,7 +13,9 @@ export class UserDeleterUseCase {
 
   async run (userId: string): Promise<User> {
     const userToDelete = await this._userGetterById.run(userId)
+
     await this._userResposiory.delete(userToDelete)
+
     return userToDelete
   }
 }

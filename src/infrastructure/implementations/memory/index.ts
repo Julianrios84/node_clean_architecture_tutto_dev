@@ -1,8 +1,7 @@
-import { User } from "@domain/entities/user";
-import { UserRepository } from "@domain/repositories/user";
+import { User } from "@domain/entities/user"
+import { UserRepository } from "@domain/repositories/user"
 
 export class InMemoryUserRepository implements UserRepository {
-
   private userData: User[] = []
 
   async getAll (): Promise<User[]> {
@@ -15,8 +14,10 @@ export class InMemoryUserRepository implements UserRepository {
   }
 
   async getByUserName (username: string): Promise<User | null> {
-    const userFound = this.userData.find(user => user.username === username)
-    if(userFound === undefined) return null
+    const userFound = this.userData.find(x => x.username === username)
+
+    if (userFound === undefined) return null
+
     return userFound
   }
 
@@ -29,13 +30,14 @@ export class InMemoryUserRepository implements UserRepository {
 
   async delete (user: User): Promise<void> {
     const users = this.userData.filter(x => x.id !== user.id)
-    this.userData = users;
+    this.userData = users
   }
 
   async getById (id: string): Promise<User | null> {
     const userFound = this.userData.find(x => x.id === id)
+
     if (userFound === undefined) return null
+
     return userFound
   }
-
 }

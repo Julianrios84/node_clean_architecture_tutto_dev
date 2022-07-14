@@ -1,21 +1,42 @@
-import { User } from "../../../../domain/entities/user";
-import { UserRepository } from "../../../../domain/repositories/user";
-import { ExistUserByUserName } from "../../../../domain/services/user/existbyusername";
-import { UserAlreadyExistsException } from "../../../../domain/exceptions/user/alreadyexistsexception";
+
+import { User } from "@domain/entities/user";
+import { UserAlreadyExistsException } from "@domain/exceptions/user";
+import { UserRepository } from "@domain/repositories/user";
+import { ExistUserByUserName } from "@domain/services/user/existbyusername";
+import { IUuidGenerator } from "@domain/utils/uuid-generator";
+
+
+interface UserInput {
+  name: string
+  age: number
+  username: string
+}
 
 export class UserCreatorUseCase {
-  private readonly _userRepository: UserRepository;
-  private readonly _existUserByUserName: ExistUserByUserName;
+  private readonly _userResposiory: UserRepository
+  private readonly _existUserByUserName: ExistUserByUserName
+  private readonly _uuidGenerator: IUuidGenerator
 
-  constructor(userRepository: UserRepository) {
-    this._userRepository = userRepository;
-    this._existUserByUserName = new ExistUserByUserName(userRepository);
+  constructor (userRepository: UserRepository, uuidGenerator: IUuidGenerator) {
+    this._userResposiory = userRepository
+    this._uuidGenerator = uuidGenerator
+    this._existUserByUserName = new ExistUserByUserName(userRepository)
   }
 
-  async run(body: User): Promise<User> {
-    const existUser = await this._existUserByUserName.run(body.username!);
-    if (existUser) throw new UserAlreadyExistsException();
-    const userCreated: User = await this._userRepository.save(body);
-    return userCreated;
+  async run (params: UserInput): Promise<User> {
+    const user: User = {
+      id: this._uuidGenerator.generate(),
+      age: params.age,
+      name: params.name,
+      username: params.username
+    }
+
+    const existUser: boolean = await this._existUserByUserName.run(user.username!)
+
+    if (existUser) throw new UserAlreadyExistsException()
+
+    const userCreated: User = await this._userResposiory.save(user)
+
+    return userCreated
   }
 }

@@ -1,4 +1,4 @@
-import { Exception } from '../exception'
+import { Exception } from "@domain/exceptions/exception"
 
 export class UserNotFoundException extends Exception {
   constructor () {
